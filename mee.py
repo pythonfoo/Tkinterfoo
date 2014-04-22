@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 cr="""  mee.py
-Michaels erster Editor - Version 0.1.0
+Michaels einfacher Editor - Version 0.1.0
   
 Copyright 2014 Michael Stehmann <info@rechtsanwalt-stehmann.de>
   
@@ -27,10 +27,11 @@ import os, tkinter.filedialog, tkinter.scrolledtext, tkinter.messagebox
 class Editor(object):
 	
 	def __init__(self):
-		self.master = Tk()
-		self.master.title("Michaels erster Editor")
-		self.master.geometry("+100+100")
+		self.content = ""; self.e = False; self.n = False
 		if not hasattr(self, 'fs'): self.fs=10
+		self.master = Tk()
+		self.master.title("Editor")
+		self.master.geometry("+100+100")
 		self.menu()
 		self.st = tkinter.scrolledtext.ScrolledText(self.master, font="SansSerif, "+str(self.fs))
 		self.st.pack(fill="both")
@@ -53,21 +54,27 @@ class Editor(object):
 		menu.add_command(label="Informationen", command=self.minfo, font = "SansSerif, "+str(self.fs))
 		
 	def makenew(self):
+		self.n == True
 		self.ende()
 		self.__init__()
 		
 	def enlargefont(self):
 		self.fs = self.fs+1
-		self.menu(); self.st["font"] = "SansSerif, "+str(self.fs)
+		self.menu()
 		
 	def reducefont(self):
 		if self.fs > 6:
 			self.fs = self.fs-1
-			self.menu(); self.st["font"] = "SansSerif, "+str(self.fs)
+			self.menu()
 		else: tkinter.messagebox.showwarning("Kleiner geht nicht!", "Noch kleiner ist nicht vorgesehen.", type="ok")
 		
 	def ende(self):
-		self.master.destroy()
+		if self.st.get("0.0", "end") != "\n" and self.st.get("0.0", "end") != self.content:
+			if tkinter.messagebox.askyesno("Speichern?", "Vorher speichern?",icon="question"):
+				if not self.n: self.e = True
+				self.saver()
+			else: self.master.destroy()			 
+		else: self.master.destroy()
 		
 	def minfo(self):
 		sb = tkinter.messagebox.showinfo("Informationen", cr, type="ok")
@@ -82,6 +89,9 @@ class Editor(object):
 		try:
 			nfo = tkinter.filedialog.asksaveasfile(initialdir=os.getenv('HOME'))
 			nfo.write(self.st.get("0.0", "end"))
+			self.content = self.st.get("0.0", "end")
+			if self.e == True: self.ende()
+			if self.n == True: self.newdia()
 		except: return
 		
 if __name__ == '__main__':
