@@ -92,7 +92,7 @@ class Editor(object):
 			self.content = self.st.get("0.0", "end")
 			if self.endflag == True: self.ende()
 			if self.newflag == True: self.newdia()
-		except: tkinter.messagebox.showwarning("Achtung!", "Es wurde nichts gespeichert", type="ok")
+		except: tkinter.messagebox.showwarning("Achtung!", "Es wurde nichts gespeichert!", type="ok")
 
 if __name__ == '__main__':
 	mee = Editor()
