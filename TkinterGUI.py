@@ -23,14 +23,14 @@
 from tkinter import *
 #import tkinter.filedialog
 #import tkinter.messagebox
-import tkinter.simpledialog
+#import tkinter.simpledialog
 
 
 def _(String):
 	"""solange keine gettext Integration erfolgt ist, ist dies ein dummy"""
 	return String
 
-class createWindow(object):
+class createWindow(tkinter.Frame):
 
 	def __init__(self, master):
 		self.master = master
