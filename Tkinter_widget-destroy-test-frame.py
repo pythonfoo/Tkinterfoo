@@ -20,7 +20,8 @@
 #       Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #       MA 02110-1301, USA.
 
-from tkinter import * 
+from tkinter import *
+from tkinter import messagebox
 
 class DialogMaker(object):
 	"""Methoden zur Erzeugung und Gestaltung von Tkinter-Dialogen"""
@@ -28,6 +29,7 @@ class DialogMaker(object):
 	def __init__(self, title):
 		"""Erzeugt Tkinter-Dialog und setzt Dialogtitel"""
 		self.dia=Tk()
+		self.dia.geometry("+100+100") 
 		self.diatitle(title)
 
 	def diatitle (self, title):
@@ -73,17 +75,28 @@ class TestDialog(object):
 	def __init__(self):
 		self.md = DialogMaker("Destroy-Test")
 		self.poorframe = self.md.makeframe()
-		self.md.label("Hilfe!\nIch soll verschwinden!", 30, 0, 0, "yellow", 1, 2)
-		self.md.button("Label entfernen", self.frameEntfernen, 0, 1)
+		self.poorlabel = self.md.label("Hilfe!\nIch soll verschwinden!", 30, 0, 0, "yellow", 1, 2)
+		self.md.button("Label entfernen", self.labelEntfernen, 0, 1)
 		self.md.endebutton(1, 1)
 		self.md.mainloop()
+
+	def labelEntfernen(self):
+		"""Label verschwinden lassen"""
+		self.poorlabel.grid_remove()
+		messagebox.showinfo("Überraschung", "Noch sind wir nicht am Ende!")
+		"""Fenster wird verschoben"""
+		self.md.dia.geometry("+200+200")
+		self.poorlabel.grid()
+		mb = messagebox.askyesno("Ich bin wieder da!", "Doch noch zerstören?",icon="question")
+		if mb:
+			self.frameEntfernen()
 
 	def frameEntfernen(self):
 		"""Frame zerstoeren"""
 		self.poorframe.destroy()
-		"""Einen Neuen ins Fenster setzen"""
+		"""Einen neuen ins Fenster setzen"""
 		self.md.makeframe()
-		self.md.label("Das hat er nun davon!", 40, 0, 0, "green")
+		self.md.label("Das hast Du nun davon!", 40, 0, 0, "green")
 		eb = self.md.endebutton(1, 0)
 		eb["fg"] = "black"
 
