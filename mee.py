@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 cr="""  mee.py
-Michaels einfacher Editor - Version 0.1.1
+Michaels einfacher Editor - Version 0.1.2
   
 Copyright 2014 Michael Stehmann <info@rechtsanwalt-stehmann.de>
   
@@ -31,7 +31,7 @@ class Editor(object):
 		self.master.geometry("+100+100")
 		self.menu()
 		self.st = tkinter.scrolledtext.ScrolledText(self.master, font="SansSerif, "+str(self.fs))
-		self.st.pack(fill="both")
+		self.st.pack(fill="both", expand="yes")
 		self.master.mainloop()
 		
 	def menu(self):
